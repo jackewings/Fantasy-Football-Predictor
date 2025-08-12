@@ -5,12 +5,6 @@ __pycache__/
 # Jupyter
 .ipynb_checkpoints/
 
-# Data
-data/
-*.csv
-*.parquet
-*.gz
-
 # Virtual env
 venv/
 .env
