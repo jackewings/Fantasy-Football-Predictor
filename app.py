@@ -20,10 +20,10 @@ test_data = {
 
 # Define feature columns used in models
 feature_cols = {
-    'QB': [col for col in test_data['QB'].columns if col not in ['player_id', 'player_display_name', 'position', 'season', 'recent_team', 'games', 'fantasy_points_ppr_per_game']],
-    'RB': [col for col in test_data['RB'].columns if col not in ['player_id', 'player_display_name', 'position', 'season', 'recent_team', 'games', 'fantasy_points_ppr_per_game']],
-    'WR': [col for col in test_data['WR'].columns if col not in ['player_id', 'player_display_name', 'position', 'season', 'recent_team', 'games', 'fantasy_points_ppr_per_game']],
-    'TE': [col for col in test_data['TE'].columns if col not in ['player_id', 'player_display_name', 'position', 'season', 'recent_team', 'games', 'fantasy_points_ppr_per_game']]
+    'QB': [col for col in test_data['QB'].columns if col not in ['player_id', 'player_display_name', 'position', 'season', 'recent_team', 'fantasy_points_ppr_per_game']],
+    'RB': [col for col in test_data['RB'].columns if col not in ['player_id', 'player_display_name', 'position', 'season', 'recent_team', 'fantasy_points_ppr_per_game']],
+    'WR': [col for col in test_data['WR'].columns if col not in ['player_id', 'player_display_name', 'position', 'season', 'recent_team', 'fantasy_points_ppr_per_game']],
+    'TE': [col for col in test_data['TE'].columns if col not in ['player_id', 'player_display_name', 'position', 'season', 'recent_team', 'fantasy_points_ppr_per_game']]
 }
 
 st.title("Fantasy Football Player PPG Predictor")
