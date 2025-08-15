@@ -26,7 +26,7 @@ feature_cols = {
     'TE': [col for col in test_data['TE'].columns if col not in ['player_id', 'player_display_name', 'position', 'season', 'recent_team', 'fantasy_points_ppr_per_game']]
 }
 
-st.title("Fantasy Football Player PPG Predictor")
+st.title("Fantasy Football Predicted Player Rankings")
 
 # User inputs
 position = st.selectbox("Select Position", ["QB", "RB", "WR", "TE"])
@@ -47,7 +47,7 @@ if st.button("Get Rankings"):
     })
 
     # Round predicted PPG
-    preds['predicted_fantasy_ppg'] = preds['predicted_fantasy_ppg'].round(1)
+    preds['predicted_fantasy_ppg'] = preds['predicted_fantasy_ppg'].round(2)
 
     # Rank players
     preds['rank'] = preds['predicted_fantasy_ppg'].rank(method='min', ascending=False).astype(int)
@@ -63,25 +63,48 @@ if st.button("Get Rankings"):
         # Find player index
         player_idx = display_df[display_df['Name'] == player].index[0]
 
-        # Slice table to show 10 rows above, 15 rows below (more scroll)
-        start_idx = max(player_idx - 10, 0)
-        end_idx = min(player_idx + 15, len(display_df))
+        # Slice table to show 10 rows above, 15 rows below
+        start_idx = max(player_idx - 4, 0)
+        end_idx = min(player_idx + 5, len(display_df))
         display_slice = display_df.iloc[start_idx:end_idx].copy()
 
-        # Highlight selected player by text style instead of background
+        # Highlight selected player
         def highlight_player(row):
             return ['font-weight: bold; color: #1155cc;' if row['Name'] == player else '' for _ in row]
 
-        st.dataframe(display_slice.style.apply(highlight_player, axis=1))
+        display_slice_indexed = display_slice.set_index('Rank')
+        st.dataframe(
+            display_slice_indexed
+            .style
+            .format({'Predicted PPG (PPR)': '{:.2f}'})
+            .apply(highlight_player, axis=1)
+        )
 
         # Show selected player's info
         player_pred = display_df.loc[player_idx]
         st.write(f"**{player}** predicted PPG (PPR): {player_pred['Predicted PPG (PPR)']:.1f}")
         st.write(f"Predicted Rank: {player_pred['Rank']}")
     else:
-        # Full rankings
-        st.dataframe(display_df, height=500)
+        # Full rankings with Rank as index
+        display_df_indexed = display_df.set_index('Rank')
+        st.dataframe(
+            display_df_indexed
+            .style
+            .format({'Predicted PPG (PPR)': '{:.2f}'})
+        , height=500)
 
+st.caption(
+    'Notes:\n' \
+    '- The rankings do not include rookies for the 2025 season.\n' \
+    '- The rankings do not fully account for new upcoming potential positional competition.\n' \
+    '- Only players who appeared in at least 8 games in the previous season are included.'
+)
+
+st.markdown("---")
+st.markdown(
+    "👋 Connect with me on [LinkedIn](https://www.linkedin.com/in/jack-ewings-profile/) | "
+    "[GitHub](https://github.com/jackewings)"
+)
 
 
 
