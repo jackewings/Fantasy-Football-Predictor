@@ -10,3 +10,5 @@ venv/
 .env
 
 .DS_Store
+
+anaconda_projects/
