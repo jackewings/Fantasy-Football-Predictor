@@ -91,13 +91,13 @@ if st.button("Get Rankings"):
             display_df_indexed
             .style
             .format({'Predicted PPG (PPR)': '{:.2f}'})
-        , height=500)
+        , height=385)
 
 st.caption(
     'Notes:\n' \
     '- The rankings do not include rookies for the 2025 season.\n' \
     '- The rankings do not fully account for new upcoming potential positional competition.\n' \
-    '- Only players who appeared in at least 8 games in the previous season are included.'
+    '- Only players who appeared in at least 8 games in the 2024 season are included.'
 )
 
 st.markdown("---")
